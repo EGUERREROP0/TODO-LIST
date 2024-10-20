@@ -8,10 +8,10 @@ startApp()
 function startApp() {
     formulario.addEventListener('submit', validateForm)
 
+    //When the screen is list
     document.addEventListener('DOMContentLoaded', () => {
         tasks = JSON.parse(localStorage.getItem('taskLocalStorage')) || [];
 
-        console.log(tasks)
         showTaskHtml()
     })
 }
@@ -35,6 +35,7 @@ function validateForm(e) {
     tasks = [...tasks, taskObj]
 
     showTaskHtml()
+    showNotification('success', 'Tarea agregada', 'Agregado')
 
     formulario.reset()
 }
@@ -88,10 +89,12 @@ function showTaskHtml() {
     synchronizeLocalStorage()
 }
 
+//Loap data to localaStorage
 function synchronizeLocalStorage() {
     localStorage.setItem('taskLocalStorage', JSON.stringify(tasks))
 }
 
+//Delete one task
 function deleteTask(id) {
     tasks = tasks.filter(task => task.id !== id)
     showNotification('warning', 'Tarea eliminada correctamente', 'Eliminado!')
@@ -108,6 +111,7 @@ function showNotification(type, title, message) {
     })
 }
 
+//Clean container tasks
 function cleanHtml(selector) {
     while (selector.firstChild) {
         selector.removeChild(selector.firstChild)
